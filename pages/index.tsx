@@ -1,15 +1,15 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import Todo from '../components/Todo';
+import TodoItem from '../components/TodoItem';
 import { listTodos } from '../src/graphql/queries';
 import { Amplify, API, graphqlOperation } from 'aws-amplify';
 import awsExports from '../src/aws-exports';
-import { ListTodosQuery} from '../src/API';
+import { ListTodosQuery, Todo} from '../src/API';
 
 Amplify.configure(awsExports);
 const Home: NextPage = () => {
-	const [todos, setTodos] = useState([]);
+	const [todos, setTodos] = useState<Todo[]>();
 	useEffect(() => {
 		fetchTodos();
 	}, []);
@@ -19,6 +19,8 @@ const Home: NextPage = () => {
 			data: ListTodosQuery;
 			errors: any[];
 		};
+
+		setTodos(data.listTodos?.items as Todo[])
 	}
 
 	return (
@@ -27,8 +29,11 @@ const Home: NextPage = () => {
 				<title>Create Next App</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-
-			<Todo />
+			<div className="mt-5 space-y-4">
+			{todos?.map((todo, index) => (
+				<TodoItem key={index} todo={todo} />
+			))}
+		</div>
 		</div>
 	);
 };
