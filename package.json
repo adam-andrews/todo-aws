@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "aws-amplify": "^4.3.33",
     "daisyui": "^2.24.0",
     "next": "latest",
     "react": "18.1.0",
