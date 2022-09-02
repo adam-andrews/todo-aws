@@ -5,7 +5,8 @@ import TodoItem from '../components/TodoItem';
 import { listTodos } from '../src/graphql/queries';
 import { Amplify, API, graphqlOperation } from 'aws-amplify';
 import awsExports from '../src/aws-exports';
-import { ListTodosQuery, Todo} from '../src/API';
+import { ListTodosQuery, Todo } from '../src/API';
+import Postbox from '../components/Postbox';
 
 Amplify.configure(awsExports);
 const Home: NextPage = () => {
@@ -20,7 +21,7 @@ const Home: NextPage = () => {
 			errors: any[];
 		};
 
-		setTodos(data.listTodos?.items as Todo[])
+		setTodos(data.listTodos?.items as Todo[]);
 	}
 
 	return (
@@ -30,10 +31,11 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<div className="mt-5 space-y-4">
-			{todos?.map((todo, index) => (
-				<TodoItem key={index} todo={todo} />
-			))}
-		</div>
+				<Postbox />
+				{todos?.map((todo, index) => (
+					<TodoItem key={index} todo={todo} />
+				))}
+			</div>
 		</div>
 	);
 };
