@@ -1,5 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { createTodo } from '../src/graphql/mutations';
+import { Amplify, API, graphqlOperation } from 'aws-amplify';
 
 type FormData = {
 	postDescription: string;
@@ -15,9 +17,17 @@ function Postbox() {
 	} = useForm<FormData>();
 
 	const onSubmit = handleSubmit(async (formData) => {
-		const { postDescription } = formData;
-        
+		let { postDescription } = formData;
+		const todoDetails = {
+			description: postDescription,
+		};
+		const createdTodo = await API.graphql({
+			query: createTodo,
+			variables: { input: todoDetails },
+		});
+
 	});
+
 	return (
 		<form onSubmit={onSubmit} className="sticky top-16 z-50 border rounded-md ">
 			<input

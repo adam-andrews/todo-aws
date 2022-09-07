@@ -25,7 +25,7 @@ function TodoItem({ todo }: TodoProps) {
 			{show && (
 				<div
 					onClick={removeTodo}
-					className="alert alert-info shadow-lg max-w-3xl"
+					className="alert alert-info shadow-lg max-w-3xl min-w-full"
 				>
 					<div>
 						<input type="checkbox" className="checkbox bg-slate-100" />
